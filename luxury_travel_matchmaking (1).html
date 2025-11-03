@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Premium travel experiences paired with sophisticated matchmaking. Discover luxury destinations with your perfect travel companion.">
+    <meta name="keywords" content="luxury travel, matchmaking, travel companions, premium trips, curated experiences">
+    <title>Voyance — Luxury Travel Matchmaking</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --color-dark: #1a1a1a;
+            --color-darker: #0f0f0f;
+            --color-cream: #f5f1e8;
+            --color-gold: #d4af37;
+            --color-gold-dim: #c9a961;
+            --color-white: #ffffff;
+            --color-gray: #888888;
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Inter', sans-serif;
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--color-darker);
+            color: var(--color-cream);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .section {
+            padding: 120px 0;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: var(--transition);
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h1, h2, h3 {
+            font-family: var(--font-serif);
+            font-weight: 500;
+            letter-spacing: -0.02em;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(135deg, var(--color-darker) 0%, var(--color-dark) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.05) 0%, transparent 70%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 1.2s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(60px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 7rem);
+            margin-bottom: 24px;
+            color: var(--color-cream);
+            line-height: 1.1;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            color: var(--color-gold-dim);
+            margin-bottom: 16px;
+            font-weight: 300;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 1.5vw, 1.25rem);
+            color: var(--color-gray);
+            max-width: 700px;
+            margin: 0 auto 48px;
+            font-weight: 300;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            padding: 18px 48px;
+            background: var(--color-gold);
+            color: var(--color-dark);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--color-cream);
+            transition: var(--transition);
+            z-index: -1;
+        }
+
+        .btn-primary:hover::before {
+            left: 0;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(212, 175, 55, 0.3);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            color: var(--color-cream);
+            margin-bottom: 16px;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--color-gray);
+            max-width: 600px;
+            margin: 0 auto;
+            font-weight: 300;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 48px;
+            margin-top: 60px;
+        }
+
+        .about-card {
+            text-align: center;
+            padding: 48px 32px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            transition: var(--transition);
+        }
+
+        .about-card:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(212, 175, 55, 0.3);
+            transform: translateY(-8px);
+        }
+
+        .about-icon {
+            font-size: 3rem;
+            color: var(--color-gold);
+            margin-bottom: 24px;
+        }
+
+        .about-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+            color: var(--color-cream);
+        }
+
+        .about-card p {
+            color: var(--color-gray);
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        .matching-section {
+            background: var(--color-dark);
+            padding: 120px 0;
+        }
+
+        .matching-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .matching-text h2 {
+            font-size: clamp(2.5rem, 4vw, 3.5rem);
+            margin-bottom: 24px;
+            color: var(--color-cream);
+        }
+
+        .matching-text p {
+            font-size: 1.1rem;
+            color: var(--color-gray);
+            margin-bottom: 32px;
+            line-height: 1.8;
+        }
+
+        .compatibility-ui {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            padding: 48px;
+            text-align: center;
+        }
+
+        .score-circle {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 3px solid var(--color-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 32px;
+            position: relative;
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(212, 175, 55, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(212, 175, 55, 0.6); }
+        }
+
+        .score-number {
+            font-size: 4rem;
+            font-family: var(--font-serif);
+            color: var(--color-gold);
+        }
+
+        .match-badge {
+            background: var(--color-gold);
+            color: var(--color-dark);
+            padding: 8px 24px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .trips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 32px;
+            margin-top: 60px;
+        }
+
+        .trip-card {
+            background: var(--color-dark);
+            overflow: hidden;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .trip-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4);
+        }
+
+        .trip-image {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, var(--color-gold-dim), var(--color-gray));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .trip-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent 50%, rgba(26, 26, 26, 0.8) 100%);
+        }
+
+        .trip-content {
+            padding: 32px;
+        }
+
+        .trip-location {
+            font-size: 0.9rem;
+            color: var(--color-gold);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 12px;
+        }
+
+        .trip-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 16px;
+            color: var(--color-cream);
+        }
+
+        .trip-card p {
+            color: var(--color-gray);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 48px;
+            margin-top: 60px;
+            position: relative;
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 2px solid var(--color-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            font-size: 2rem;
+            font-family: var(--font-serif);
+            color: var(--color-gold);
+            background: rgba(212, 175, 55, 0.05);
+        }
+
+        .step h3 {
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+            color: var(--color-cream);
+        }
+
+        .step p {
+            color: var(--color-gray);
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+            margin-top: 60px;
+        }
+
+        .pricing-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            padding: 48px 32px;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .pricing-card.featured {
+            background: rgba(212, 175, 55, 0.05);
+            border-color: var(--color-gold);
+            transform: scale(1.05);
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: var(--color-gold);
+        }
+
+        .pricing-card.featured:hover {
+            transform: translateY(-8px) scale(1.07);
+        }
+
+        .pricing-label {
+            font-size: 0.9rem;
+            color: var(--color-gold);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 16px;
+        }
+
+        .pricing-card h3 {
+            font-size: 2rem;
+            margin-bottom: 24px;
+            color: var(--color-cream);
+        }
+
+        .price {
+            font-size: 3.5rem;
+            font-family: var(--font-serif);
+            color: var(--color-gold);
+            margin-bottom: 8px;
+        }
+
+        .price-period {
+            font-size: 1rem;
+            color: var(--color-gray);
+            margin-bottom: 32px;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 32px;
+            text-align: left;
+        }
+
+        .pricing-features li {
+            padding: 12px 0;
+            color: var(--color-gray);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 48px;
+            margin-top: 60px;
+        }
+
+        .testimonial {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            padding: 48px;
+            transition: var(--transition);
+        }
+
+        .testimonial:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(212, 175, 55, 0.3);
+        }
+
+        .testimonial-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .testimonial-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--color-gold-dim), var(--color-gray));
+            margin-right: 20px;
+            border: 2px solid var(--color-gold);
+        }
+
+        .testimonial-info h4 {
+            font-size: 1.2rem;
+            color: var(--color-cream);
+            margin-bottom: 4px;
+        }
+
+        .testimonial-location {
+            font-size: 0.9rem;
+            color: var(--color-gray);
+        }
+
+        .testimonial-text {
+            font-size: 1.1rem;
+            color: var(--color-gray);
+            line-height: 1.8;
+            font-style: italic;
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, var(--color-dark) 0%, var(--color-darker) 100%);
+            text-align: center;
+            padding: 120px 0;
+        }
+
+        .cta-section h2 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 24px;
+            color: var(--color-cream);
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            color: var(--color-gray);
+            margin-bottom: 48px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .footer {
+            background: var(--color-darker);
+            padding: 80px 0 40px;
+            text-align: center;
+            border-top: 1px solid rgba(212, 175, 55, 0.1);
+        }
+
+        .footer-brand {
+            font-size: 2rem;
+            font-family: var(--font-serif);
+            color: var(--color-gold);
+            margin-bottom: 16px;
+        }
+
+        .footer-tagline {
+            color: var(--color-gray);
+            margin-bottom: 32px;
+            font-size: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--color-gray);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--color-gold);
+        }
+
+        .footer-social {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-gold);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-icon:hover {
+            background: var(--color-gold);
+            color: var(--color-dark);
+            transform: translateY(-4px);
+        }
+
+        .footer-copyright {
+            color: var(--color-gray);
+            font-size: 0.9rem;
+            padding-top: 32px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        @media (max-width: 968px) {
+            .section {
+                padding: 80px 0;
+            }
+
+            .matching-content {
+                grid-template-columns: 1fr;
+                gap: 48px;
+            }
+
+            .trips-grid,
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .section {
+                padding: 60px 0;
+            }
+
+            .about-grid,
+            .steps-container,
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+
+            .btn-primary {
+                padding: 16px 36px;
+                font-size: 0.95rem;
+            }
+
+            .compatibility-ui {
+                padding: 32px 24px;
+            }
+
+            .score-circle {
+                width: 160px;
+                height: 160px;
+            }
+
+            .score-number {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <div class="hero-content">
+            <p class="hero-subtitle">Where Journey Meets Connection</p>
+            <h1>Voyance</h1>
+            <p>Experience the world's finest destinations with your perfect travel companion. Our sophisticated matchmaking platform pairs discerning travelers for unforgettable luxury adventures.</p>
+            <a href="#about" class="btn-primary">Begin Your Journey</a>
+        </div>
+    </section>
+
+    <section id="about" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">The Voyance Experience</h2>
+                <p class="section-subtitle">Where luxury travel meets meaningful connection through intelligent matchmaking</p>
+            </div>
+            <div class="about-grid">
+                <div class="about-card">
+                    <div class="about-icon">✦</div>
+                    <h3>Curated Matchmaking</h3>
+                    <p>Our proprietary algorithm analyzes travel preferences, personality traits, and lifestyle choices to connect you with compatible companions who share your vision of luxury travel.</p>
+                </div>
+                <div class="about-card">
+                    <div class="about-icon">◈</div>
+                    <h3>Luxury Destinations</h3>
+                    <p>Access exclusive destinations and bespoke experiences crafted for discerning travelers. From private islands to cultural immersions, every journey is extraordinary.</p>
+                </div>
+                <div class="about-card">
+                    <div class="about-icon">❖</div>
+                    <h3>Seamless Experience</h3>
+                    <p>From initial match to final departure, our concierge team ensures every detail is perfected. Travel with confidence, connect with purpose.</p>
+                </div>
+                <div class="about-card">
+                    <div class="about-icon">✧</div>
+                    <h3>Verified Community</h3>
+                    <p>Join an exclusive circle of sophisticated travelers. Every member is thoroughly vetted to ensure authenticity, safety, and shared values.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="matching-section section">
+        <div class="container">
+            <div class="matching-content">
+                <div class="matching-text">
+                    <h2>Intelligent Compatibility</h2>
+                    <p>Our advanced matching system goes beyond surface-level preferences. We analyze travel styles, communication patterns, adventure preferences, and cultural interests to create meaningful connections.</p>
+                    <p>Each match is carefully calculated to ensure compatibility in tempo, luxury expectations, and shared experiences. Travel is better when shared with the right companion.</p>
+                    <a href="#" class="btn-primary">Discover Your Match</a>
+                </div>
+                <div class="compatibility-ui">
+                    <div class="score-circle">
+                        <span class="score-number">94%</span>
+                    </div>
+                    <p class="match-badge">Exceptional Match</p>
+                    <p style="color: var(--color-gray); margin-top: 24px;">Based on 47 compatibility factors including travel preferences, lifestyle alignment, and shared interests</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Curated Destinations</h2>
+                <p class="section-subtitle">Exclusive journeys designed for extraordinary experiences</p>
+            </div>
+            <div class="trips-grid">
+                <div class="trip-card">
+                    <div class="trip-image"></div>
+                    <div class="trip-content">
+                        <p class="trip-location">Santorini, Greece</p>
+                        <h3>Aegean Romance</h3>
+                        <p>Seven days of sunset villas, private yacht excursions, and authentic Mediterranean cuisine in the jewel of the Cyclades.</p>
+                    </div>
+                </div>
+                <div class="trip-card">
+                    <div class="trip-image"></div>
+                    <div class="trip-content">
+                        <p class="trip-location">Kyoto, Japan</p>
+                        <h3>Imperial Elegance</h3>
+                        <p>Immerse yourself in ancient temples, traditional tea ceremonies, and kaiseki dining in Japan's cultural heartland.</p>
+                    </div>
+                </div>
+                <div class="trip-card">
+                    <div class="trip-image"></div>
+                    <div class="trip-content">
+                        <p class="trip-location">Amalfi Coast, Italy</p>
+                        <h3>Coastal Grandeur</h3>
+                        <p>Experience the dramatic cliffs, hidden coves, and world-class gastronomy of Italy's most romantic coastline.</p>
+                    </div>
+                </div>
+                <div class="trip-card">
+                    <div class="trip-image"></div>
+                    <div class="trip-content">
+                        <p class="trip-location">Maldives</p>
+                        <h3>Island Sanctuary</h3>
+                        <p>Overwater villas, pristine reefs, and unparalleled tranquility in the Indian Ocean's most luxurious archipelago.</p>
+                    </div>
+                </div>
+                <div class="trip-card">
+                    <div class="trip-image"></div>
+                    <div class="trip-content">
+                        <p class="trip-location">Patagonia, Chile</p>
+                        <h3>Wilderness Discovery</h3>
+                        <p>Trek through untouched landscapes, witness glacial majesty, and experience the raw beauty of Earth's southern frontier.</p>
+                    </div>
+                </div>
+                <div class="trip-card">
+                    <div class="trip-image"></div>
+                    <div class="trip-content">
+                        <p class="trip-location">Marrakech, Morocco</p>
+                        <h3>Desert Mystique</h3>
+                        <p>Luxury riads, spice-scented souks, and Saharan adventures in North Africa's most enchanting imperial city.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" style="background: var(--color-dark);">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">How It Works</h2>
+                <p class="section-subtitle">Three elegant steps to your perfect journey</p>
+            </div>
+            <div class="steps-container">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Create Your Profile</h3>
+                    <p>Share your travel aspirations, preferences, and what you seek in a travel companion. Our detailed questionnaire ensures precision in matching.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Connect & Converse</h3>
+                    <p>Review your curated matches and engage in meaningful conversations. Our secure platform facilitates authentic connection before commitment.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Journey Together</h3>
+                    <p>Select your dream destination and embark on an unforgettable experience. Our concierge handles every detail while you focus on the adventure.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Membership Tiers</h2>
+                <p class="section-subtitle">Choose the experience that matches your ambitions</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <p class="pricing-label">Starter</p>
+                    <h3>Explorer</h3>
+                    <div class="price">$499</div>
+                    <p class="price-period">per month</p>
+                    <ul class="pricing-features">
+                        <li>5 curated matches monthly</li>
+                        <li>Access to group trips</li>
+                        <li>Standard concierge support</li>
+                        <li>Travel planning assistance</li>
+                        <li>Community forum access</li>
+                    </ul>
+                    <a href="#" class="btn-primary" style="width: 100%;">Get Started</a>
+                </div>
+                <div class="pricing-card featured">
+                    <p class="pricing-label">Most Popular</p>
+                    <h3>Voyager</h3>
+                    <div class="price">$999</div>
+                    <p class="price-period">per month</p>
+                    <ul class="pricing-features">
+                        <li>Unlimited premium matches</li>
+                        <li>Private & group trips</li>
+                        <li>Priority concierge 24/7</li>
+                        <li>Bespoke itinerary design</li>
+                        <li>Exclusive events access</li>
+                        <li>Luxury upgrades included</li>
+                    </ul>
+                    <a href="#" class="btn-primary" style="width: 100%;">Join Now</a>
+                </div>
+                <div class="pricing-card">
+                    <p class="pricing-label">Ultimate</p>
+                    <h3>Elite</h3>
+                    <div class="price">$2,499</div>
+                    <p class="price-period">per month</p>
+                    <ul class="pricing-features">
+                        <li>Personal matchmaker service</li>
+                        <li>Fully customized journeys</li>
+                        <li>Dedicated travel curator</li>
+                        <li>Private jet arrangements</li>
+                        <li>Invitation-only experiences</li>
+                        <li>Global VIP network access</li>
+                        <li>Unlimited luxury amenities</li>
+                    </ul>
+                    <a href="#" class="btn-primary" style="width: 100%;">Apply Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" style="background: var(--color-dark);">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Travelers' Stories</h2>
+                <p class="section-subtitle">Real connections, unforgettable journeys</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial">
+                    <div class="testimonial-header">
+                        <div class="testimonial-avatar"></div>
+                        <div class="testimonial-info">
+                            <h4>Alexandra & James</h4>
+                            <p class="testimonial-location">Matched for Kyoto</p>
+                        </div>
+                    </div>
+                    <p class="testimonial-text">"Voyance didn't just find me a travel companion—they found me my perfect match in life. Our shared love for Japanese culture led to the most magical two weeks in Kyoto. We're planning our wedding there next spring."</p>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-header">
+                        <div class="testimonial-avatar"></div>
+                        <div class="testimonial-info">
+                            <h4>Marcus & Sofia</h4>
+                            <p class="testimonial-location">Matched for Patagonia</p>
+                        </div>
+                    </div>
+                    <p class="testimonial-text">"As solo adventurers, we never imagined finding someone who matched our passion for wilderness exploration. The compatibility was uncanny. Hiking through Patagonia together was transformative—we've already booked Iceland."</p>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-header">
+                        <div class="testimonial-avatar"></div>
+                        <div class="testimonial-info">
+                            <h4>Isabella & Christian</h4>
+                            <p class="testimonial-location">Matched for Santorini</p>
+                        </div>
+                    </div>
+                    <p class="testimonial-text">"The level of sophistication in Voyance's matching algorithm is remarkable. Every detail aligned—from our appreciation for fine wine to our preferred travel pace. Santorini was absolutely perfect, and so was the company."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Your Journey Awaits</h2>
+            <p>Join our exclusive community of discerning travelers. Experience the world with someone who truly understands your vision of luxury and adventure.</p>
+            <a href="#" class="btn-primary">Start Your Adventure</a>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <h3 class="footer-brand">Voyance</h3>
+            <p class="footer-tagline">Where Journey Meets Connection</p>
+            <div class="footer-links">
+                <a href="#">About Us</a>
+                <a href="#">Destinations</a>
+                <a href="#">Membership</a>
+                <a href="#">Safety & Privacy</a>
+                <a href="#">Contact</a>
+                <a href="#">Terms</a>
+            </div>
+            <div class="footer-social">
+                <a href="#" class="social-icon">f</a>
+                <a href="#" class="social-icon">in</a>
+                <a href="#" class="social-icon">tw</a>
+                <a href="#" class="social-icon">ig</a>
+            </div>
+            <p class="footer-copyright">© 2025 Voyance. All rights reserved. Luxury travel experiences crafted with care.</p>
+        </div>
+    </footer>
+
+    <script>
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.section').forEach(section => {
+            observer.observe(section);
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        const tripCards = document.querySelectorAll('.trip-card');
+        tripCards.forEach((card, index) => {
+            card.style.animationDelay = `${index * 0.1}s`;
+        });
+
+        let scrollPos = 0;
+        const hero = document.querySelector('.hero');
+        
+        window.addEventListener('scroll', () => {
+            scrollPos = window.pageYOffset;
+            if (hero && scrollPos < window.innerHeight) {
+                hero.style.transform = `translateY(${scrollPos * 0.5}px)`;
+                hero.style.opacity = 1 - (scrollPos / window.innerHeight);
+            }
+        });
+
+        const priceCards = document.querySelectorAll('.pricing-card');
+        priceCards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.zIndex = '10';
+            });
+            card.addEventListener('mouseleave', function() {
+                this.style.zIndex = '1';
+            });
+        });
+    </script>
+</body>
+</html>
